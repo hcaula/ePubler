@@ -7,6 +7,7 @@
     "dev": "NODE_ENV=development && node server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": "https://github.com/hcaula/epubler",
   "keywords": [
     "epub",
     "ebooks",
