@@ -14,5 +14,5 @@ module.exports = function(app) {
  * Functions
 */
 var edit = function(req, res) {
-  res.send(req.body);
+  res.send(req.files);
 }

@@ -12,15 +12,26 @@ var storage = multer.diskStorage({
     cb(null, './uploads/' + file.fieldname);
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    var format = (file.fieldname == 'book' ? ".zip" : path.extname(file.originalname));
+    cb(null, file.fieldname + '-' + Date.now() + format);
+  }
+});
+
+var supported = ['.jpeg', '.jpg', '.png'];
+
+var upload = multer({
+  storage: storage,
+  fileFilter: function(req, file, cb) {
+    var format = path.extname(file.originalname);
+    if (file.fieldname == 'book' && format != '.epub') cb(null, false);
+    else if (file.fieldname == 'cover' && !supported.includes(format)) cb(null, false);
+    else cb(null, true);
   }
 });
 
 /*
- * Upload functions
+ * Lib functions
 */
-var upload = multer({storage: storage});
-
-var cpUpload = upload.fields([{ name: 'book', maxCount: 1 }, { name: 'cover', maxCount: 1 }]);
-
-exports.upload = [cpUpload]
+exports.upload = [
+  upload.fields([{ name: 'book', maxCount: 1 }, { name: 'cover', maxCount: 1 }])
+];
