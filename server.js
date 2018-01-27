@@ -7,5 +7,6 @@ http.createServer(app).listen(app.get('port'), function() {
   url += connection.host;
   url += ":" + connection.port;
 
+  console.log("Server up at " + new Date());
   console.log('Express app listening on ' + url);
 });
