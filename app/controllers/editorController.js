@@ -2,12 +2,13 @@
  * Libs
 */
 var uploader = require('../lib/uploader').upload;
+var unziper = require('../lib/unziper').unziper;
 
 /*
  * Routes
 */
 module.exports = function(app) {
-  app.post('/edit', uploader, edit);
+  app.post('/edit', uploader, unziper, edit);
 }
 
 /*
