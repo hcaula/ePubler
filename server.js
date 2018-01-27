@@ -19,6 +19,7 @@ var createPublicDirectories = function() {
     "./uploads/",
     "./uploads/book",
     "./uploads/cover",
+    "./uploads/images",
     "./unzips/"
   ].forEach(function(dir){
     if (!fs.existsSync(dir)) fs.mkdirSync(dir);
