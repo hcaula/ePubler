@@ -1,0 +1,23 @@
+{
+  "name": "epubler",
+  "version": "1.0.0",
+  "description": "Modify the metadata of your ePUB books.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development && node server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "epub",
+    "ebooks",
+    "metadata",
+    "cover",
+    "edit"
+  ],
+  "author": "Henrique Caúla",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^1.29.2",
+    "express": "^4.16.2"
+  }
+}
