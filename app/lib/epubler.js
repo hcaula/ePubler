@@ -17,7 +17,7 @@ var getMetadata = function(req, res, next) {
     };
     if(epub.metadata.cover) {
       var id = epub.metadata.cover;
-      req.book.coverPath = epub.manifest[id].href;
+      req.book.file.coverPath = epub.manifest[id].href;
     }
     next();
   }).parse();
@@ -38,10 +38,11 @@ var getCover = function(req, res, next) {
   var book = req.book;
   if(!book.metadata.cover) next();
   else {
-    var unzipPath = 'unzips/' + path.basename(book.file.filename, '.epub') + '/' + book.coverPath;
+    var unzipPath = 'unzips/' + path.basename(book.file.filename, '.epub') + '/' + book.file.coverPath;
     var copyPath = 'public/images/' + path.basename(book.file.filename, '.epub') + '.jpeg';
     fs.copyFileSync(unzipPath, copyPath);
-    req.book.publicCover = copyPath.replace("public/images/", "");
+    req.book.file.publicCover = copyPath.replace("public/images/", "");
+    req.book.file.unzipPath = unzipPath;
     next();
   }
 }
@@ -57,8 +58,12 @@ exports.epubler = [
  * GenePub middleware functions
 */
 
+var getOpfFile = function(req, res, next) {
+  fs.readdirSync(testFolder).forEach(file => {
+    console.log(file);
+  })
+}
+
 exports.generateBook = [
-  function(req, res, next) {
-    next();
-  }
+  getOpfFile
 ]

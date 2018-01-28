@@ -11,13 +11,13 @@ var generateBook = require('../lib/epubler').generateBook;
 */
 module.exports = function(app) {
   app.post('/upload', uploader, epubler, returner);
-  app.post('/edit', uploader, generateBook, edit);
+  app.post('/generate', uploader, generateBook, generate);
 }
 
 /*
  * Functions
 */
-var edit = function(req, res) {
+var generate = function(req, res) {
   res.send(req.files);
 }
 
