@@ -7,7 +7,7 @@ module.exports = function() {
   app.set('port', 3000);
 
   app.use(express.static('./public'));
-  app.use(express.static('./uploads/cover'));
+  app.use(express.static('./uploads/images'));
 
   load('controllers', {cwd: 'app'}).into(app);
 

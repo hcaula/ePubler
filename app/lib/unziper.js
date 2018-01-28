@@ -18,7 +18,9 @@ var unzipBook = function(req, res, next) {
   var path = book.file.zipPath;
   var stream = fs.createReadStream(path);
   stream.pipe(unzip.Extract({path:req.unzipDir}));
-  next();
+  stream.on('close', function(){
+    next();
+  });
 }
 
 exports.unziper = [

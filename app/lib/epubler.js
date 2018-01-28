@@ -12,6 +12,10 @@ var getMetadata = function(req, res, next) {
       metadata: epub.metadata,
       file: book
     };
+    if(epub.metadata.cover) {
+      var id = epub.metadata.cover;
+      req.book.coverPath = epub.manifest[id].href;
+    }
     next();
   }).parse();
 }
@@ -27,8 +31,21 @@ var epubToZip = function(req, res, next) {
   }
 }
 
+var getCover = function(req, res, next) {
+  var book = req.book;
+  if(!book.metadata.cover) next();
+  else {
+    var unzipPath = 'unzips/' + path.basename(book.file.filename, '.epub') + '/' + book.coverPath;
+    var copyPath = 'uploads/images/' + path.basename(book.file.filename, '.epub') + '.jpeg';
+    fs.copyFileSync(unzipPath, copyPath);
+    req.book.publicCover = copyPath.replace("uploads/images/", "");
+    next();
+  }
+}
+
 exports.epubler = [
   getMetadata,
   epubToZip,
-  unziper
+  unziper,
+  getCover
 ]
