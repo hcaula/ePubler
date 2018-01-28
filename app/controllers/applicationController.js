@@ -4,13 +4,14 @@
 var uploader = require('../lib/uploader').upload;
 var unziper = require('../lib/unziper').unziper;
 var epubler = require('../lib/epubler').epubler;
+var generateBook = require('../lib/epubler').generateBook;
 
 /*
  * Routes
 */
 module.exports = function(app) {
   app.post('/upload', uploader, epubler, returner);
-  app.post('/edit', uploader, unziper, edit);
+  app.post('/edit', uploader, generateBook, edit);
 }
 
 /*
@@ -21,5 +22,5 @@ var edit = function(req, res) {
 }
 
 var returner = function(req, res) {
-  res.send(req.book);
+  res.status(200).json(req.book);
 }

@@ -3,6 +3,9 @@ var fs = require("fs");
 var path = require("path");
 var unziper = require("./unziper").unziper;
 
+/*
+ * ePubler middleware functions
+*/
 var getMetadata = function(req, res, next) {
   var book = req.files.book[0];
   var epub = new EPub(book.path);
@@ -36,9 +39,9 @@ var getCover = function(req, res, next) {
   if(!book.metadata.cover) next();
   else {
     var unzipPath = 'unzips/' + path.basename(book.file.filename, '.epub') + '/' + book.coverPath;
-    var copyPath = 'uploads/images/' + path.basename(book.file.filename, '.epub') + '.jpeg';
+    var copyPath = 'public/images/' + path.basename(book.file.filename, '.epub') + '.jpeg';
     fs.copyFileSync(unzipPath, copyPath);
-    req.book.publicCover = copyPath.replace("uploads/images/", "");
+    req.book.publicCover = copyPath.replace("public/images/", "");
     next();
   }
 }
@@ -48,4 +51,14 @@ exports.epubler = [
   epubToZip,
   unziper,
   getCover
+]
+
+/*
+ * GenePub middleware functions
+*/
+
+exports.generateBook = [
+  function(req, res, next) {
+    next();
+  }
 ]
